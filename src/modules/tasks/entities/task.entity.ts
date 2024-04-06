@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/modules/users/entities/user.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('task')
 export class Task extends BaseEntity {
@@ -13,4 +21,8 @@ export class Task extends BaseEntity {
 
   @Column({ nullable: true, default: false })
   isImportant: boolean;
+
+  @ManyToOne(() => User, (user) => user.tasks)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

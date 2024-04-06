@@ -27,7 +27,6 @@ export class AuthService {
   async generateToken(user: User): Promise<{ access_token: string }> {
     return {
       access_token: this.jwtService.sign({
-        name: `${user.firstName} ${user.lastName}`,
         email: user.email,
         sub: user.id,
       }),

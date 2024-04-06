@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -22,8 +23,9 @@ export class TasksController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+  create(@Request() req, @Body() createTaskDto: CreateTaskDto) {
+    const user = req.user;
+    return this.tasksService.create(createTaskDto, user.userId);
   }
 
   @Get()

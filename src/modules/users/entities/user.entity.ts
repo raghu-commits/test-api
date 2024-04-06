@@ -1,10 +1,10 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
-import { BeforeInsert, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { Entity } from 'typeorm/decorator/entity/Entity';
 import { BaseEntity } from 'typeorm/repository/BaseEntity';
-import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
+import { Task } from 'src/modules/tasks/entities/task.entity';
 
 @Entity('user')
 @Unique(['email'])
@@ -36,9 +36,5 @@ export class User extends BaseEntity {
   @Column({ name: 'password', type: 'varchar' })
   password: string;
 
-  @BeforeInsert()
-  async encryptPassword(password: string) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password || password, salt);
-  }
+  @OneToMany(() => Task, (task) => task.user) tasks: Task[];
 }
