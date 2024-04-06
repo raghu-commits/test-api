@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { UsersModule } from './users/users.module';
-import { TasksModule } from './tasks/tasks.module';
+import { UsersModule } from './modules/users/users.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

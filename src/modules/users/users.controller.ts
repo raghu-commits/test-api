@@ -20,6 +20,6 @@ export class UsersController {
 
   @Get(':email')
   findByEmail(@Param('email') email: string) {
-    return this.usersService.findOne(email);
+    return this.usersService.findOneByEmail(email);
   }
 }

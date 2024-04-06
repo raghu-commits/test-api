@@ -4,11 +4,13 @@ import { ApiTags } from '@nestjs/swagger';
 import { LoginRequestDto } from './dto/login-request.dto';
 
 @ApiTags('Authentication')
-@Controller('auth')
+@Controller('authenticate')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post()
-  login(@Body() credentials: LoginRequestDto): boolean {
+  authenticate(
+    @Body() credentials: LoginRequestDto,
+  ): Promise<{ access_token: string }> {
     return this.authService.validate(credentials);
   }
 }
