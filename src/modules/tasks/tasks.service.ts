@@ -10,8 +10,8 @@ import { User } from '../users/entities/user.entity';
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(Task) private taskRepository: Repository<Task>,
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Task) private readonly taskRepository: Repository<Task>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
   async create(createTaskDto: CreateTaskDto, userId: number) {
     const task = await this.taskRepository.save(createTaskDto);
@@ -20,15 +20,18 @@ export class TasksService {
   }
 
   async findAll() {
-    return await this.taskRepository.find();
+    return await this.taskRepository.find({
+      relations: ['user'],
+    });
   }
 
-  async findOne(id: number) {
-    const task = await this.taskRepository.findOne({ where: { id } });
-    if (task !== null) {
-      return task;
-    }
-    return { message: 'No matching tasks found!!' };
+  async findAllByUserId(userId: number) {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    console.log(user);
+    return await this.taskRepository.find({
+      relations: ['user'],
+      where: { user: user },
+    });
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {

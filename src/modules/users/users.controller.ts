@@ -18,6 +18,10 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.usersService.findOneById(+id);
+  }
   @Get(':email')
   findByEmail(@Param('email') email: string) {
     return this.usersService.findOneByEmail(email);

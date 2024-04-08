@@ -19,9 +19,6 @@ export class Task extends BaseEntity {
   @Column({ nullable: true, default: false })
   isCompleted: boolean;
 
-  @Column({ nullable: true, default: false })
-  isImportant: boolean;
-
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn({ name: 'user_id' })
   user: User;

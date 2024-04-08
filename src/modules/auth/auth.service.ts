@@ -12,8 +12,8 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
   ) {}
   async validate(_credentials: LoginRequestDto) {
     const user = await this.usersService.findOneByEmail(_credentials.username);
@@ -24,12 +24,16 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async generateToken(user: User): Promise<{ access_token: string }> {
+  async generateToken(
+    user: User,
+  ): Promise<{ access_token: string; name: string; userId: number }> {
     return {
       access_token: this.jwtService.sign({
         email: user.email,
         sub: user.id,
       }),
+      name: user.firstName + ' ' + user.lastName,
+      userId: user.id,
     };
   }
 }

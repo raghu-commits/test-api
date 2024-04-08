@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const salt = await bcrypt.genSalt();
@@ -25,6 +25,10 @@ export class UsersService {
 
   async findAll() {
     return await this.userRepository.find();
+  }
+
+  async findOneById(id: number): Promise<User> {
+    return await this.userRepository.findOne({ where: { id } });
   }
 
   async findOneByEmail(email: string): Promise<User> {

@@ -10,7 +10,7 @@ export class AuthController {
   @Post()
   authenticate(
     @Body() credentials: LoginRequestDto,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string; name: string; userId: number }> {
     return this.authService.validate(credentials);
   }
 }

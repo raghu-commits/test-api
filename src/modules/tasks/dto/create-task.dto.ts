@@ -14,8 +14,4 @@ export class CreateTaskDto {
   @IsOptional()
   @IsBoolean()
   isCompleted: boolean = false;
-
-  @IsOptional()
-  @IsBoolean()
-  isImportant: boolean = false;
 }
