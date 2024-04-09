@@ -4,7 +4,7 @@ import { Column } from 'typeorm/decorator/columns/Column';
 import { Entity } from 'typeorm/decorator/entity/Entity';
 import { BaseEntity } from 'typeorm/repository/BaseEntity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Task } from 'src/modules/tasks/entities/task.entity';
+import { Task } from '../../tasks/entities/task.entity';
 
 @Entity('user')
 @Unique(['email'])
