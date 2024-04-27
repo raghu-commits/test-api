@@ -25,6 +25,7 @@ jobs:
         run: |
           npm cache clean --force
           npm install
+          npm install --save-dev @nestjs/cli
           npm run build --if-present
           npm run test --if-present
 
